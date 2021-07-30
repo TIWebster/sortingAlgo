@@ -70,7 +70,6 @@ async function insertionSort(array){
 }
 
 async function selectionSort(array){
-
     //Performs selection sort on given array
     let time = 100/array.length;
     for (i=0; i<array.length;i++){
@@ -82,13 +81,43 @@ async function selectionSort(array){
         }
         if(jMin != i){
             await sleep(time);
-            console.log(i);
             swapColumns(array,i, jMin);
             temp = array[i];
             array[i] = array[jMin];
             array[jMin] = temp;
         }
         let column = document.querySelector("#bar"+array[jMin]);
+        column.style.backgroundColor = 'green';
+    }
+    console.log(array);
+}
+
+async function bubbleSort(array){
+    //Implements bubble sort to given array
+    let time = 100/array.length;
+    n = array.length;
+    let swapped;
+    do {
+        swapped = false;
+        for (i=1; i<=n-1; i++){
+            if (array[i-1] > array[i]){
+                //Swaps elements when i-1th element is > ith
+                await sleep(time);
+                swapColumns(array,i, i-1);
+                temp = array[i];
+                array[i] = array[i-1];
+                array[i-1] = temp;
+                swapped = true;
+            }
+        }
+        //When a value is sorted colour is green
+        let column = document.querySelector("#bar"+array[i-1]);
+        column.style.backgroundColor = 'green';
+        n-=1;
+    }while(swapped != false);
+    //For the values that do not need to be sorted, they are changed to green
+    for (j = 0; j<= i; j++){
+        let column = document.querySelector("#bar"+array[j]);
         column.style.backgroundColor = 'green';
     }
     console.log(array);
@@ -116,7 +145,6 @@ function swapColumns(array, a, b){
     let temp = column1.style.order;
     column1.style.order = column2.style.order;
     column2.style.order = temp;
-    column2.style.backgroundColor = 'green';
 }
 
 function sleep(ms) {
@@ -133,11 +161,16 @@ slider.oninput = function(){
     output.textContent = "Value: " + this.value; 
 }
 
+
 let sortArray = [];
+//Reset button reinitialises with n sized array
 const resetButton = document.querySelector('#resetButton');
 resetButton.onclick = () => init(slider.value);
 
+//Sorting algorithm buttons
 const insertionButton = document.querySelector("#insertionSortButton");
 const selectionButton = document.querySelector("#selectionSortButton");
-insertionButton.onclick = () => insertionSort(sortArray);;
-selectionButton.onclick = () => selectionSort(sortArray);;
+const bubbleButton = document.querySelector("#bubbleSortButton");
+insertionButton.onclick = () => insertionSort(sortArray);
+selectionButton.onclick = () => selectionSort(sortArray);
+bubbleButton.onclick = () => bubbleSort(sortArray);
