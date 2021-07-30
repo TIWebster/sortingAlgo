@@ -56,7 +56,7 @@ async function insertionSort(array){
         
         while (m > 0 && array[m-1] > array[m]){
             await sleep(time);
-            swapColumns(array,m);
+            swapColumns(array,m, m-1);
             temp = array[m];
             array[m] = array[m-1];
             array[m-1] = temp;
@@ -69,25 +69,50 @@ async function insertionSort(array){
     return array;
 }
 
+async function selectionSort(array){
+
+    //Performs selection sort on given array
+    let time = 100/array.length;
+    for (i=0; i<array.length;i++){
+        let jMin = i;
+        for (j=i+1; j < array.length; j++){
+            if (array[j] < array[jMin]){
+                jMin = j;
+            }
+        }
+        if(jMin != i){
+            await sleep(time);
+            console.log(i);
+            swapColumns(array,i, jMin);
+            temp = array[i];
+            array[i] = array[jMin];
+            array[jMin] = temp;
+        }
+        let column = document.querySelector("#bar"+array[jMin]);
+        column.style.backgroundColor = 'green';
+    }
+    console.log(array);
+}
+
 function columnInit(array){
     //Initialise columns gridtemplate
     let n = array.length;
-    let outString =""
+    let outString ="";
     for (i=1;i<=n;i++){
         if (i!=n){
-            outString += "auto "
+            outString += "auto ";
         }else{
-            outString +="auto"
+            outString +="auto";
         }
         
     }
-    return outString
+    return outString;
 }
 
-function swapColumns(array,m){
+function swapColumns(array, a, b){
     //Swaps columns given m position, used to visualize swap
-    let column1 = document.querySelector("#bar"+array[m]);
-    let column2 = document.querySelector("#bar"+array[m-1]);
+    let column1 = document.querySelector("#bar"+array[a]);
+    let column2 = document.querySelector("#bar"+array[b]);
     let temp = column1.style.order;
     column1.style.order = column2.style.order;
     column2.style.order = temp;
@@ -109,7 +134,10 @@ slider.oninput = function(){
 }
 
 let sortArray = [];
-const sortButton = document.querySelector("#sortButton");
 const resetButton = document.querySelector('#resetButton');
-sortButton.onclick = () => insertionSort(sortArray);;
 resetButton.onclick = () => init(slider.value);
+
+const insertionButton = document.querySelector("#insertionSortButton");
+const selectionButton = document.querySelector("#selectionSortButton");
+insertionButton.onclick = () => insertionSort(sortArray);;
+selectionButton.onclick = () => selectionSort(sortArray);;

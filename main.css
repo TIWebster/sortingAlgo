@@ -6,16 +6,19 @@
 }
 
 #buttonContainer{
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 #btn {
     margin-top: 50px;
 }
 
-.header {
-    display:grid;
-    background-color: hsl(0,0%,70%);
+.algoHeader {
+    margin-top:50px;
+
+}
+.algoHeader button {
+    width: 100px;
 }
 
 body {
