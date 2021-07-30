@@ -2,4 +2,28 @@
     display: flex;
     align-content: center;
     border: 1px solid black;
+    height: 500px;
+}
+
+#buttonContainer{
+    margin-top: 50px;
+}
+
+#btn {
+    margin-top: 50px;
+}
+
+.header {
+    display:grid;
+    background-color: hsl(0,0%,70%);
+}
+
+body {
+    margin: 0 0 0 0;
+    background-color: hsl(0, 0%, 90%);
+}
+
+#myRange {
+    margin: auto;
+    width: 50%;
 }
